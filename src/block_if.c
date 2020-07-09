@@ -115,6 +115,8 @@ static struct blockif_sig_elem *blockif_bse_head;
 
 #pragma clang diagnostic pop
 
+#if __MAC_OS_X_VERSION_MAX_ALLOWED < 101600
+
 static ssize_t
 preadv(int fd, const struct iovec *iov, int iovcnt, off_t offset)
 {
@@ -134,6 +136,8 @@ pwritev(int fd, const struct iovec *iov, int iovcnt, off_t offset)
 	assert(res == offset);
 	return writev(fd, iov, iovcnt);
 }
+
+#endif
 
 static int
 blockif_enqueue(struct blockif_ctxt *bc, struct blockif_req *breq,
